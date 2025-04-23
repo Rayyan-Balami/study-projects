@@ -23,7 +23,7 @@ function createProjectCard(project, index) {
         >
       </div>
       <div class="space-y-2">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between">
             <h3 class="text-lg font-medium hover-target">${project.title}</h3>
           <span class="text-sm uppercase tracking-wider text-gray-500">${project.type}</span>
         </div>
