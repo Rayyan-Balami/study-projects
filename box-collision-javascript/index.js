@@ -1,9 +1,15 @@
 const ROOT = document.querySelector("#root");
-const SCREEN_WIDTH = window.innerWidth 
-const SCREEN_HEIGHT = window.innerHeight
+let SCREEN_WIDTH = window.innerWidth;
+let SCREEN_HEIGHT = window.innerHeight;
 const BOX_SIZE = 60;
 const BOX_TEXT_SIZE = 40;
-const SPEED = 4;
+let SPEED = 5;
+
+// Get control elements
+const boxCountInput = document.getElementById("boxCount");
+const boxSpeedInput = document.getElementById("boxSpeed");
+const speedValueDisplay = document.getElementById("speedValue");
+const restartButton = document.getElementById("restartBtn");
 
 function applyCSS(element, styles) {
   Object.assign(element.style, styles);
@@ -60,6 +66,12 @@ const colors = [
 
 class Screen {
   constructor() {
+    // First, remove any existing screen elements
+    const existingScreen = document.getElementById("screen");
+    if (existingScreen) {
+      ROOT.removeChild(existingScreen);
+    }
+    
     this.element = document.createElement("div");
     this.element.id = "screen";
     applyCSS(this.element, {
@@ -67,12 +79,19 @@ class Screen {
       height: `${SCREEN_HEIGHT}px`,
       position: "relative",
       backgroundColor: "black",
+      overflow: "hidden",
     });
     ROOT.appendChild(this.element);
   }
 
   addElement(element) {
     this.element.appendChild(element);
+  }
+
+  clear() {
+    while (this.element.firstChild) {
+      this.element.removeChild(this.element.firstChild);
+    }
   }
 }
 
@@ -82,7 +101,7 @@ class Box {
     this.element.className = "box";
     this.x = x;
     this.y = y;
-    // Increase speed for more noticeable movement
+    // Use current SPEED value from controls
     this.speedX = (Math.random() * 2 - 1) * SPEED;
     this.speedY = (Math.random() * 2 - 1) * SPEED;
     this.randomIndex = Math.floor(Math.random() * colors.length);
@@ -145,6 +164,7 @@ class Game {
     this.screen = new Screen();
     this.boxes = [];
     this.boxesCount = boxesCount;
+    this.keepUpdating = null;
   }
 
   start() {
@@ -153,6 +173,16 @@ class Game {
       this.updateBoxes();
     }, 1000 / 60);
   }
+  
+  stop() {
+    if (this.keepUpdating) {
+      clearInterval(this.keepUpdating);
+      this.keepUpdating = null;
+    }
+    this.screen.clear();
+    this.boxes = [];
+  }
+  
   createBoxes() {
     for (let i = 0; i < this.boxesCount; i++) {
       const x = Math.random() * (SCREEN_WIDTH - BOX_SIZE);
@@ -164,6 +194,7 @@ class Game {
       this.screen.addElement(box.element);
     }
   }
+  
   updateBoxes() {
     for (let i = 0; i < this.boxes.length; i++) {
       const box = this.boxes[i];
@@ -231,12 +262,8 @@ class Game {
           //update the position of the boxes
           box.updatePosition();
           otherBox.updatePosition();
-          
-          
-
         }
       }
-
     }
   }
 
@@ -250,7 +277,6 @@ class Game {
     return false
   }
 
-  // We can simplify this function now - it's just for detection
   checkBoxCollision(box1, box2) {
     if (
       box1.x < box2.x + BOX_SIZE &&
@@ -264,7 +290,37 @@ class Game {
   }
 }
 
-const game = new Game(30);
+// Initialize the game
+let game = new Game(parseInt(boxCountInput.value));
 game.start();
 
-//
+// Event listeners for controls
+boxSpeedInput.addEventListener("input", function() {
+  SPEED = parseInt(this.value);
+  speedValueDisplay.textContent = SPEED;
+});
+
+restartButton.addEventListener("click", function() {
+  // Stop the current game
+  game.stop();
+  
+  // Get values from controls
+  const boxCount = parseInt(boxCountInput.value);
+  SPEED = parseInt(boxSpeedInput.value);
+  
+  // Start a new game
+  game = new Game(boxCount);
+  game.start();
+});
+
+// Window resize handler
+window.addEventListener("resize", function() {
+  // Update global constants
+  SCREEN_WIDTH = window.innerWidth;
+  SCREEN_HEIGHT = window.innerHeight;
+  
+  // Restart the game to reflect the new screen size
+  game.stop();
+  game = new Game(parseInt(boxCountInput.value));
+  game.start();
+});
