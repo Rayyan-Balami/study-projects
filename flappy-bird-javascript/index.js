@@ -46,8 +46,7 @@ class Screen {
     this.element.id = "screen";
 
     // Add score display
-    this.scoreElement = createElement("div", "score", {
-    });
+    this.scoreElement = createElement("div", "score", {});
     this.element.appendChild(this.scoreElement);
 
     //add Base ground
@@ -314,7 +313,7 @@ class Game {
   }
 
   updatePoles() {
-    this.poles.forEach(({topPole,bottomPole}) => {
+    this.poles.forEach(({ topPole, bottomPole }) => {
       topPole.updatePosition();
       bottomPole.updatePosition();
 
@@ -332,9 +331,10 @@ class Game {
         const gapY = Math.random() * (maxGapY - minGapY) + minGapY;
 
         // Toggle pole image when recycling
-        const newImage = topPole.backgroundImage === POLE_RED_IMG
-          ? POLE_GREEN_IMG
-          : POLE_RED_IMG;
+        const newImage =
+          topPole.backgroundImage === POLE_RED_IMG
+            ? POLE_GREEN_IMG
+            : POLE_RED_IMG;
 
         topPole.backgroundImage = newImage;
         bottomPole.backgroundImage = newImage;
@@ -346,8 +346,16 @@ class Game {
           backgroundImage: `url(${newImage})`,
         });
 
-        // maintain a gap between poles
-        const x = SCREEN_WIDTH + POLE_WIDTH;
+        // Find the rightmost pole
+        let rightmostPole = this.poles[0].topPole;
+        for (const { topPole } of this.poles) {
+          if (topPole.x > rightmostPole.x) {
+            rightmostPole = topPole;
+          }
+        }
+
+        // Set position based on the actual rightmost pole
+        const x = rightmostPole.x + POLE_WIDTH + POLE_GAP;
 
         topPole.reset(x, gapY);
         bottomPole.reset(x, gapY);
@@ -356,7 +364,7 @@ class Game {
   }
 
   checkCollision() {
-    for (const { topPole,bottomPole } of this.poles) {
+    for (const { topPole, bottomPole } of this.poles) {
       //hit on top pole edge
       if (
         this.bird.x + BIRD_WIDTH > topPole.x &&
@@ -388,7 +396,6 @@ class Game {
     applyCSS(this.screen.modal, {
       display: "block",
     });
-  
   }
 
   resetGame() {
@@ -419,8 +426,7 @@ class Game {
         this.update();
         this.start();
       }
-    }
-    );
+    });
   }
 }
 
