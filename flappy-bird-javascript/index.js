@@ -307,9 +307,9 @@ class Game {
   }
 
   update() {
-    // this.bird.updatePosition();
+    this.bird.updatePosition();
     this.updatePoles();
-    // this.checkCollision();
+    this.checkCollision();
     this.screen.updateScore(this.score);
   }
 
