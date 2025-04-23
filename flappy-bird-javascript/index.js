@@ -288,7 +288,7 @@ class Game {
   }
 
   createPoles() {
-    for (let i = 0; i < SCREEN_WIDTH / (POLE_WIDTH + POLE_GAP); i++) {
+    for (let i = 0; i < SCREEN_WIDTH * 2 / (POLE_WIDTH + POLE_GAP); i++) {
       //x position of pole with gaping
       const x = SCREEN_WIDTH + i * (POLE_WIDTH + POLE_GAP);
 
