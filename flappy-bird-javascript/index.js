@@ -346,7 +346,8 @@ class Game {
           backgroundImage: `url(${newImage})`,
         });
 
-        const x = SCREEN_WIDTH - POLE_WIDTH + POLE_GAP;
+        // maintain a gap between poles
+        const x = SCREEN_WIDTH + POLE_WIDTH;
 
         topPole.reset(x, gapY);
         bottomPole.reset(x, gapY);
