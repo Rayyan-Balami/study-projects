@@ -1,35 +1,29 @@
 [
   {
-    "id": "1",
+    "slug": "apartment-landing",
     "title": "Apartment Landing Page",
     "description": "A landing page, converted from a PSD design to pixel-perfect HTML/CSS implementation.",
     "image": "./assets/images/apartment-landing.png",
     "type": "Website",
     "status": "Completed",
-    "startDate": "2023-01-15",
-    "completionDate": "2023-04-20",
-    "link": "https://rayyanbalami.github.io/apartment-landing/"
+    "completionDate": "2025-04-04"
   },
   {
-    "id": "2",
+    "slug": "box-collision-javascript",
     "title": "Box Collision Simulator",
     "description": "An collision detection simulator using box in a 2D space. Taking screen and other box collision into account.",
     "image": "./assets/images/box-collision-javascript.png",
     "type": "Javascript",
     "status": "Completed",
-    "startDate": "2023-03-10",
-    "completionDate": "2023-05-05",
-    "link": "https://rayyanbalami.github.io/box-collision-javascript/"
+    "completionDate": "2025-04-12"
   },
   {
-    "id": "3",
+    "slug": "flappy-bird-javascript",
     "title": "Flappy Bird Clone",
     "description": "A recreation of the classic Flappy Bird game using vanilla JavaScript with custom physics, collision detection, and scoring system.",
     "image": "./assets/images/flappy-bird-javascript.png",
     "type": "Javascript",
     "status": "Completed",
-    "startDate": "2023-06-01",
-    "completionDate": "2023-07-15",
-    "link": "https://rayyanbalami.github.io/flappy-bird-javascript/"
+    "completionDate": "2025-04-22"
   }
 ]

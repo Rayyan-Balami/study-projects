@@ -11,9 +11,9 @@ function formatDate(dateString) {
 // Function to create project card HTML
 function createProjectCard(project, index) {
   const delay = (index % 3) * 0.1;
-
+  const url = `https://rayyan-balami.github.io/study-projects/${project.slug}`;
   return `
-    <a href="${project.link}" class="project-card fade-in grid grid-rows-subgrid gap-6 row-span-3" style="animation-delay: ${0.3 + delay}s">
+    <a href="${url}" class="project-card fade-in grid grid-rows-subgrid gap-6 row-span-3" style="animation-delay: ${0.3 + delay}s">
       <div class="overflow-hidden aspect-[4/5] hover-target border border-gray-200">
         <img 
           src="${project.image || "placeholder.svg"}" 
@@ -29,7 +29,7 @@ function createProjectCard(project, index) {
         <p class="text-base text-gray-600">${project.description}</p>
       </div>
       <div class="pt-2 flex justify-between items-center text-sm text-gray-500">
-        <span>${formatDate(project.startDate)}</span>
+        <span>${formatDate(project.completionDate)}</span>
         ${
           project.status === "Completed"
             ? `<span class="px-3 py-1 bg-gray-100 rounded-full">Completed</span>`
