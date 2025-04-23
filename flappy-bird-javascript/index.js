@@ -346,8 +346,10 @@ class Game {
           backgroundImage: `url(${newImage})`,
         });
 
-        topPole.reset(SCREEN_WIDTH, gapY);
-        bottomPole.reset(SCREEN_WIDTH, gapY);
+        const x = SCREEN_WIDTH - POLE_WIDTH + POLE_GAP;
+
+        topPole.reset(x, gapY);
+        bottomPole.reset(x, gapY);
       }
     });
   }
