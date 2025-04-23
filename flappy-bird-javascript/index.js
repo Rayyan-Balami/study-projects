@@ -288,7 +288,10 @@ class Game {
   }
 
   createPoles() {
-    for (let i = 0; i < SCREEN_WIDTH * 2 / (POLE_WIDTH + POLE_GAP); i++) {
+    // Ensure a minimum of 4 poles regardless of screen size
+    const poleCount = Math.max(4, Math.floor(SCREEN_WIDTH * 2 / (POLE_WIDTH + POLE_GAP)));
+    
+    for (let i = 0; i < poleCount; i++) {
       //x position of pole with gaping
       const x = SCREEN_WIDTH + i * (POLE_WIDTH + POLE_GAP);
 
