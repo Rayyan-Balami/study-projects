@@ -18,6 +18,7 @@ function createProjectCard(project, index) {
         <img 
           src="${project.image || "placeholder.svg"}" 
           alt="${project.title}" 
+          loading="lazy"
           class="project-image w-full h-full object-cover object-top"
         >
       </div>
