@@ -1,0 +1,28 @@
+# Ignore the Deno cache directory
+/.deno/
+
+# Ignore the Deno modules cache (if using Deno with external modules)
+/deno_modules/
+
+# Ignore compiled TypeScript files
+*.tsbuildinfo
+
+# Ignore log files
+*.log
+
+# Ignore environment variables files (e.g., .env)
+.env
+
+# Ignore the Deno test output
+*.test.ts
+
+# Ignore IDE and editor configurations (e.g., VSCode, JetBrains, etc.)
+.vscode/
+.idea/
+
+# Ignore OS-specific files
+.DS_Store  # macOS
+Thumbs.db  # Windows
+
+# Ignore temporary files
+*.swp
