@@ -1,6 +1,6 @@
 [
   {
-    "slug": "apartment-landing",
+    "url": "https://rayyan-balami.github.io/study-projects/apartment-landing",
     "title": "Apartment Landing Page : PSD Slicing",
     "description": "A landing page, converted from a PSD design to pixel-perfect HTML/CSS implementation.",
     "image": "./assets/images/apartment-landing.png",
@@ -9,7 +9,7 @@
     "completionDate": "2025-04-04"
   },
   {
-    "slug": "box-collision-javascript",
+    "url": "https://rayyan-balami.github.io/study-projects/box-collision-javascript",
     "title": "Box Collision Simulator",
     "description": "An collision detection simulator using box in a 2D space. Taking screen and other box collision into account.",
     "image": "./assets/images/box-collision-javascript.png",
@@ -18,12 +18,21 @@
     "completionDate": "2025-04-12"
   },
   {
-    "slug": "flappy-bird-javascript",
+    "url": "https://rayyan-balami.github.io/study-projects/flappy-bird-javascript",
     "title": "Flappy Bird Clone",
     "description": "A recreation of the classic Flappy Bird game using vanilla JavaScript with custom physics, collision detection, and scoring system.",
     "image": "./assets/images/flappy-bird-javascript.png",
     "type": "Javascript",
     "status": "Completed",
     "completionDate": "2025-04-22"
+  },
+  {
+    "url": "https://github.com/Rayyan-Balami/study-projects/tree/main/todo-deno-starter",
+    "title": "TODO: Stepping Into Backend using Deno & Oak",
+    "description": "A backend project using Deno and Oak framework to build a RESTful API.",
+    "image": "./assets/images/todo-deno-starter.png",
+    "type": "Backend",
+    "status": "Completed",
+    "completionDate": "2025-04-25"
   }
 ]

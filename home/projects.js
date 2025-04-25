@@ -11,9 +11,8 @@ function formatDate(dateString) {
 // Function to create project card HTML
 function createProjectCard(project, index) {
   const delay = (index % 3) * 0.1;
-  const url = `https://rayyan-balami.github.io/study-projects/${project.slug}`;
   return `
-    <a href="${url}" class="project-card fade-in grid grid-rows-subgrid gap-6 row-span-3" style="animation-delay: ${0.3 + delay}s">
+    <a href="${project.url}" class="project-card fade-in grid grid-rows-subgrid gap-6 row-span-3" style="animation-delay: ${0.3 + delay}s">
       <div class="overflow-hidden aspect-[4/5] hover-target border border-gray-200">
         <img 
           src="${project.image || "placeholder.svg"}" 
