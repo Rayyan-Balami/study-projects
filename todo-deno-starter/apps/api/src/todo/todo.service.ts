@@ -1,30 +1,39 @@
 import todoDao from "./todo.dao.ts";
 import { todo } from "@api/todo/todo.dto.ts";
 
-const getTodos = async (): Promise<todo[]> => {
-  return await todoDao.getAll();
-};
+interface ITodoService {
+  getTodos(): Promise<todo[]>;
+  getTodoById(id: string): Promise<todo | null>;
+  createTodo(newTodo: todo): Promise<todo>;
+  updateTodo(id: string, todoData: Partial<todo>): Promise<todo>;
+  deleteTodo(id: string): Promise<void>;
+  deleteAllTodos(): Promise<void>;
+}
 
-const getTodoById = async (id: string): Promise<todo> => {
-  return await todoDao.getById(id);
-};
+class TodoService implements ITodoService {
+  async getTodos(): Promise<todo[]> {
+    return await todoDao.findAll();
+  }
 
-const createTodo = async (newTodo: todo): Promise<todo> => {
-  return await todoDao.create(newTodo);
-};
+  async getTodoById(id: string): Promise<todo | null> {
+    return await todoDao.findById(id);
+  }
 
-const updateTodo = async (id: string, todoData: Partial<todo>): Promise<todo> => {
-  return await todoDao.update(id, todoData);
-};
+  async createTodo(newTodo: todo): Promise<todo> {
+    return await todoDao.create(newTodo);
+  }
 
-const deleteTodo = async (id: string): Promise<todo> => {
-  return await todoDao.detele(id);
-};
+  async updateTodo(id: string, todoData: Partial<todo>): Promise<todo> {
+    return await todoDao.update(id, todoData);
+  }
 
-export default {
-  getTodos,
-  getTodoById,
-  createTodo,
-  updateTodo,
-  deleteTodo
-};
+  async deleteTodo(id: string): Promise<void> {
+    await todoDao.delete(id);
+  }
+
+  async deleteAllTodos(): Promise<void> {
+    await todoDao.deleteAll();
+  }
+}
+
+export default new TodoService();

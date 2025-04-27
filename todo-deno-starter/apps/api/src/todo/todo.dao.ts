@@ -1,48 +1,45 @@
 import { todo } from "@api/todo/todo.dto.ts";
+import BaseDao from "../base/base.dao.ts";
 
-let todos: todo[] = [];
+class TodoDao extends BaseDao<todo> {
+  private todos: todo[] = [];
 
-const getAll = async () => {
-  return todos;
-};
-
-const getById = async (id: string) => {
-  const foundTodo = todos.find((t) => t.id === id);
-  if (!foundTodo) {
-    throw new Error(`Todo with ID ${id} not found`);
+  async create(todo: todo): Promise<todo> {
+    this.todos.unshift(todo);
+    return todo;
   }
-  return foundTodo;
-};
 
-const create = async (todo: todo) => {
-  todos.unshift(todo);
-  return todo;
-};
-
-const update = async (id: string, updatedTodo: Partial<todo>) => {
-  const index = todos.findIndex((t) => t.id === id);
-  if (index === -1) {
-    throw new Error(`Todo with ID ${id} not found`);
+  async findById(id: string): Promise<todo | null> {
+    const foundTodo = this.todos.find((t) => t.id === id);
+    return foundTodo || null;
   }
-  
-  todos[index] = { ...todos[index], ...updatedTodo };
-  return todos[index];
-};
 
-const detele = async (id: string) => {
-  const index = todos.findIndex((t) => t.id === id);
-  if (index === -1) {
-    throw new Error(`Todo with ID ${id} not found`);
+  async findAll(): Promise<todo[]> {
+    return this.todos;
   }
-  
-  const [deletedTodo] = todos.splice(index, 1);
-  return deletedTodo;
-};
 
-export default {
-  getAll,
-  getById,
-  create,
-  update,
-  detele,
-};
+  async update(id: string, updatedTodo: Partial<todo>): Promise<todo> {
+    const index = this.todos.findIndex((t) => t.id === id);
+    if (index === -1) {
+      throw new Error(`Todo with ID ${id} not found`);
+    }
+    
+    this.todos[index] = { ...this.todos[index], ...updatedTodo };
+    return this.todos[index];
+  }
+
+  async delete(id: string): Promise<void> {
+    const index = this.todos.findIndex((t) => t.id === id);
+    if (index === -1) {
+      throw new Error(`Todo with ID ${id} not found`);
+    }
+    
+    this.todos.splice(index, 1);
+  }
+
+  async deleteAll(): Promise<void> {
+    this.todos = [];
+  }
+}
+
+export default new TodoDao();

@@ -62,14 +62,26 @@ export const updateTodo = async (ctx: RouterContext<string>) => {
 export const deleteTodo = async (ctx: RouterContext<string>) => {
   try {
     const { id } = ctx.params;
-    const deletedTodo = await todoService.deleteTodo(id);
+    await todoService.deleteTodo(id);
     ctx.response.body = {
-      data: deletedTodo,
       message: 'Todo deleted successfully',
     };
     ctx.response.status = 200;
   } catch (error: any) {
     ctx.response.status = 404;
+    ctx.response.body = { error: error.message };
+  }
+};
+
+export const deleteAllTodos = async (ctx: Context) => {
+  try {
+    await todoService.deleteAllTodos();
+    ctx.response.body = {
+      message: 'All todos deleted successfully',
+    };
+    ctx.response.status = 200;
+  } catch (error: any) {
+    ctx.response.status = 500;
     ctx.response.body = { error: error.message };
   }
 };
