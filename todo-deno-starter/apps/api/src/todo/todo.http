@@ -1,0 +1,46 @@
+@baseUrl = http://localhost:8000/api
+@id = 1
+
+### Get all todos
+GET {{baseUrl}}/todos
+
+### Get a single todo by ID 
+# Replace {{id}} with an actual todo ID
+GET {{baseUrl}}/todos/{{id}}
+
+### Create a new todo
+POST {{baseUrl}}/todos
+Content-Type: application/json
+
+{
+  "title": "Learn Deno",
+  "description": "Complete the Deno tutorial and build a REST API",
+  "status": "ongoing"
+}
+
+### Update a todo
+# Replace {{id}} with an actual todo ID
+PUT {{baseUrl}}/todos/{{id}}
+Content-Type: application/json
+
+{
+  "title": "Learn Deno",
+  "description": "Complete the Deno tutorial and build a REST API",
+  "status": "complete"
+}
+
+### Update a todo (partial update)
+# Replace {{id}} with an actual todo ID
+PUT {{baseUrl}}/todos/{{id}}
+Content-Type: application/json
+
+{
+  "status": "complete"
+}
+
+### Delete a todo
+# Replace {{id}} with an actual todo ID
+DELETE {{baseUrl}}/todos/{{id}}
+
+### Delete all todos
+DELETE {{baseUrl}}/todos

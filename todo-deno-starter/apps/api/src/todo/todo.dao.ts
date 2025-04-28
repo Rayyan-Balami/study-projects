@@ -1,44 +1,103 @@
 import { todo } from "@api/todo/todo.dto.ts";
 import BaseDao from "../base/base.dao.ts";
+import { db } from "@utils/db.ts";
 
 class TodoDao extends BaseDao<todo> {
-  private todos: todo[] = [];
-
+  
   async create(todo: todo): Promise<todo> {
-    this.todos.unshift(todo);
-    return todo;
+    const result = await db.queryObject<todo>(
+      `INSERT INTO todos (title, description, status) 
+       VALUES ($1, $2, $3) 
+       RETURNING id, title, description, status`,
+      [todo.title, todo.description, todo.status]
+    );
+    
+    return result.rows[0];
   }
 
   async findById(id: string): Promise<todo | null> {
-    const foundTodo = this.todos.find((t) => t.id === id);
-    return foundTodo || null;
+    const result = await db.queryObject<todo>(
+      `SELECT id, title, description, status 
+       FROM todos 
+       WHERE id = $1`,
+      [id]
+    );
+    
+    return result.rows.length > 0 ? result.rows[0] : null;
   }
 
   async findAll(): Promise<todo[]> {
-    return this.todos;
+    const result = await db.queryObject<todo>(
+      `SELECT id, title, description, status 
+       FROM todos 
+       ORDER BY created_at DESC`
+    );
+    
+    return result.rows;
   }
 
   async update(id: string, updatedTodo: Partial<todo>): Promise<todo> {
-    const index = this.todos.findIndex((t) => t.id === id);
-    if (index === -1) {
+    // Build dynamic update query based on provided fields
+    const updates: string[] = [];
+    const values: any[] = [];
+    let paramCount = 1;
+    
+    if (updatedTodo.title !== undefined) {
+      updates.push(`title = $${paramCount}`);
+      values.push(updatedTodo.title);
+      paramCount++;
+    }
+    
+    if (updatedTodo.description !== undefined) {
+      updates.push(`description = $${paramCount}`);
+      values.push(updatedTodo.description);
+      paramCount++;
+    }
+    
+    if (updatedTodo.status !== undefined) {
+      updates.push(`status = $${paramCount}`);
+      values.push(updatedTodo.status);
+      paramCount++;
+    }
+    
+    if (updates.length === 0) {
+      const currentTodo = await this.findById(id);
+      if (!currentTodo) {
+        throw new Error(`Todo with ID ${id} not found`);
+      }
+      return currentTodo;
+    }
+    
+    values.push(id); // Add id as the last parameter
+    
+    const result = await db.queryObject<todo>(
+      `UPDATE todos 
+       SET ${updates.join(', ')} 
+       WHERE id = $${paramCount} 
+       RETURNING id, title, description, status`,
+      [...values]
+    );
+    
+    if (result.rows.length === 0) {
       throw new Error(`Todo with ID ${id} not found`);
     }
     
-    this.todos[index] = { ...this.todos[index], ...updatedTodo };
-    return this.todos[index];
+    return result.rows[0];
   }
 
   async delete(id: string): Promise<void> {
-    const index = this.todos.findIndex((t) => t.id === id);
-    if (index === -1) {
+    const result = await db.queryObject(
+      `DELETE FROM todos WHERE id = $1 RETURNING id`,
+      [id]
+    );
+    
+    if (result.rows.length === 0) {
       throw new Error(`Todo with ID ${id} not found`);
     }
-    
-    this.todos.splice(index, 1);
   }
 
   async deleteAll(): Promise<void> {
-    this.todos = [];
+    await db.queryObject(`DELETE FROM todos`);
   }
 }
 
