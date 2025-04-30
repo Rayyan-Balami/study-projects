@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="guessTheNumber.css">
+  <script src="guessTheNumber.js" defer></script>
+</head>
+<body>
+
+  <div class="container">
+      <div class="top"><button id="onOffSwitch">ON</button></div>
+    <div class="middle">
+      <div class="screen">
+        <p id="output"></p>
+        <div id="number"></div>
+        <div id="history">
+          <p>Best Score :<span id="bestScore">0</span></p>
+          <p>No of Guess : <span id="noOfGuess">0</span></p>
+        </div>
+        <h1>GAME OF GUESS</h1>
+      </div>
+  </div>
+  <div class="bottom">
+    <div class="bottom-left">
+      <div class="range">
+        <p>Range</p>
+        <div>
+          <input type="number" id="min" value="1">
+          <p>to</p>
+          <input type="number" id="max" value="100">
+        </div>
+      </div>
+      <div class="guess">
+        <p>What is your guess?</p>
+        <input type="number" id="guess" value="69">
+      </div>
+    </div>
+    <div class="bottom-right">
+      <button id="submitBtn">Submit</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </div>
+  
+</body>
+</html>
