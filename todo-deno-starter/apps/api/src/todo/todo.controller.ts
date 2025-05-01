@@ -10,7 +10,7 @@ else if route params (/:id) then ctx: RouterContext<string>
 
 export const getTodos = async (ctx: Context) => {
   try {
-    const todos = await todoService.getTodos();
+    const todos = await todoService.getAll();
     ctx.response.body = { data: todos };
     ctx.response.status = 200;
   } catch (error: any) {
@@ -22,7 +22,7 @@ export const getTodos = async (ctx: Context) => {
 export const getTodoById = async (ctx: RouterContext<string>) => {
   try {
     const { id } = ctx.params;
-    const todo = await todoService.getTodoById(id);
+    const todo = await todoService.getById(id);
     ctx.response.body = { data: todo };
     ctx.response.status = 200;
   } catch (error: any) {
@@ -34,7 +34,7 @@ export const getTodoById = async (ctx: RouterContext<string>) => {
 export const createTodo = async (ctx: Context) => {
   try {
     const body = await ctx.request.body().value;
-    const newTodo = await todoService.createTodo(body as todo);
+    const newTodo = await todoService.create(body as todo);
     ctx.response.status = 201;
     ctx.response.body = { data: newTodo, message: 'Todo created successfully' };
   } catch (error: any) {
@@ -47,7 +47,7 @@ export const updateTodo = async (ctx: RouterContext<string>) => {
   try {
     const { id } = ctx.params;
     const body = await ctx.request.body().value;
-    const updatedTodo = await todoService.updateTodo(id, body);
+    const updatedTodo = await todoService.update(id, body);
     ctx.response.body = {
       data: updatedTodo,
       message: 'Todo updated successfully',
@@ -62,7 +62,7 @@ export const updateTodo = async (ctx: RouterContext<string>) => {
 export const deleteTodo = async (ctx: RouterContext<string>) => {
   try {
     const { id } = ctx.params;
-    await todoService.deleteTodo(id);
+    await todoService.delete(id);
     ctx.response.body = {
       message: 'Todo deleted successfully',
     };
@@ -75,7 +75,7 @@ export const deleteTodo = async (ctx: RouterContext<string>) => {
 
 export const deleteAllTodos = async (ctx: Context) => {
   try {
-    await todoService.deleteAllTodos();
+    await todoService.deleteAll();
     ctx.response.body = {
       message: 'All todos deleted successfully',
     };

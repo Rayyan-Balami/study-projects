@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:8000/api
-@id = 4
+@id = 5
 
 ### Get all todos
 GET {{baseUrl}}/todos
@@ -26,7 +26,7 @@ Content-Type: application/json
 {
   "title": "Learn Deno",
   "description": "Complete the Deno tutorial and build a REST API",
-  "status": "complete"
+  "status": "ongoing"
 }
 
 ### Update a todo (partial update)
